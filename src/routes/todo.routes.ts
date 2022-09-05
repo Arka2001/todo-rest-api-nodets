@@ -8,4 +8,6 @@ TodoRouter.post(
     TodoController.AddTodo,
 );
 
+TodoRouter.get("/", TodoController.GetAllTodos);
+
 export default TodoRouter;

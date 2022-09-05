@@ -19,4 +19,14 @@ const AddTodo = async (todo: TodoDto) => {
     }
 };
 
-export { AddTodo };
+const GetAllTodos = async (limit: number, offset: number) => {
+    try {
+        const todos = await Todo.find().limit(limit).skip(limit * offset);
+
+        return { status: 200, todos, message: "Success" };
+    } catch (error) {
+        return { code: 500, todos: [], message: "Internal Server Error" };
+    }
+}
+
+export { AddTodo, GetAllTodos };

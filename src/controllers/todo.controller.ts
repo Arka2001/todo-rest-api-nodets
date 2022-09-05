@@ -10,7 +10,7 @@ const AddTodo = async (req: Request, res: Response) => {
         content: req.body.content,
     };
 
-    if(!todo.title || !todo.content) {
+    if (!todo.title || !todo.content) {
         return ResponseCreator.generateResponse(
             res,
             400,
@@ -19,9 +19,18 @@ const AddTodo = async (req: Request, res: Response) => {
         );
     }
 
-    const {code, message} = await TodoService.AddTodo(todo);
+    const { code, message } = await TodoService.AddTodo(todo);
 
     return ResponseCreator.generateResponse(res, code, {}, message);
 }
 
-export default {AddTodo};
+const GetAllTodos = async (req: Request, res: Response) => {
+    const limit: number = Number(req.query['limit'] || 10);
+    const offset: number = Number(req.query['offset'] || 0);
+
+    const { code, todos, message } = await TodoService.GetAllTodos(limit, offset);
+
+    return ResponseCreator.generateResponse(res, code, todos, message);
+}
+
+export default { AddTodo, GetAllTodos };
