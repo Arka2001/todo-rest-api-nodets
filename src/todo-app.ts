@@ -4,6 +4,7 @@ dotenv.config();
 import express, { Application } from "express";
 import cors from "cors";
 import { connect } from "../config/db.config";
+import TodoRouter from "./routes/todo.routes";
 
 //Environment Variables
 const app: Application = express();
@@ -13,6 +14,7 @@ const PORT: number = Number(process.env.PORT || 3000);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/api/todos", TodoRouter);
 
 
 app.get('/', async (req, res) => res.send(`ToDo API running successfully since ${new Date()}`));
