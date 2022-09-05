@@ -57,7 +57,7 @@ const UpdateTodoByID = async (_id: Types.ObjectId, title?: string, content?: str
             );
 
             if (!result) return { code: 400, todo: {}, message: "Bad Request" };
-            return { code: 202, todo: {}, message: "Updated Successfully" };
+            return { code: 200, todo: {}, message: "Updated Successfully" };
         } else {
             return { code: 404, currentTodo, message: "Todo Not Found" };
         }
@@ -66,4 +66,20 @@ const UpdateTodoByID = async (_id: Types.ObjectId, title?: string, content?: str
     }
 }
 
-export { AddTodo, GetAllTodos, GetTodoByID, UpdateTodoByID };
+const DeleteTodo = async (_id: Types.ObjectId) => {
+    try {
+        const todo = await Todo.findOne({ _id });
+        if (todo) {
+            const result = await Todo.deleteOne({ _id }, { upsert: true });
+            if (!result) return { code: 400, todo: {}, message: "Bad Request" };
+            return { code: 200, todo: {}, message: "Deleted Successfully" };
+        } else {
+            return { code: 404, todo: {}, message: "Todo Not Found" };
+        }
+
+    } catch (error) {
+        return { code: 500, todo: {}, message: "Internal Server Error" };
+    }
+}
+
+export { AddTodo, GetAllTodos, GetTodoByID, UpdateTodoByID, DeleteTodo };

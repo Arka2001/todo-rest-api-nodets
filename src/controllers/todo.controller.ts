@@ -42,7 +42,7 @@ const GetTodoByID = async (req: Request, res: Response) => {
         return ResponseCreator.generateResponse(res, 404, {}, "Todo Not Found");
     }
 
-    const {code, todo, message} = await TodoService.GetTodoByID(id);
+    const { code, todo, message } = await TodoService.GetTodoByID(id);
 
     return ResponseCreator.generateResponse(res, code, todo, message);
 }
@@ -50,7 +50,7 @@ const GetTodoByID = async (req: Request, res: Response) => {
 const UpdateTodoByID = async (req: Request, res: Response) => {
     let id: Types.ObjectId;
 
-    const title : string = req.body.title;
+    const title: string = req.body.title;
     const content: string = req.body.content;
 
     try {
@@ -59,10 +59,24 @@ const UpdateTodoByID = async (req: Request, res: Response) => {
         return ResponseCreator.generateResponse(res, 404, {}, "Todo Not Found");
     }
 
-    const {code, todo, message} = await TodoService.UpdateTodoByID(id, title, content);
+    const { code, message } = await TodoService.UpdateTodoByID(id, title, content);
 
-    return ResponseCreator.generateResponse(res, code, todo, message);
+    return ResponseCreator.generateResponse(res, code, message);
 
 }
 
-export default { AddTodo, GetAllTodos ,GetTodoByID, UpdateTodoByID };
+const DeleteTodo = async (req: Request, res: Response) => {
+    let id: Types.ObjectId;
+
+    try {
+        id = new Types.ObjectId(req.params.id);
+    } catch (error) {
+        return ResponseCreator.generateResponse(res, 404, {}, "Todo Not Found");
+    }
+
+    const { code, message } = await TodoService.DeleteTodo(id);
+
+    return ResponseCreator.generateResponse(res, code, message);
+}
+
+export default { AddTodo, GetAllTodos, GetTodoByID, UpdateTodoByID, DeleteTodo };
