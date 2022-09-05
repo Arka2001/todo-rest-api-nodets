@@ -47,4 +47,22 @@ const GetTodoByID = async (req: Request, res: Response) => {
     return ResponseCreator.generateResponse(res, code, todo, message);
 }
 
-export default { AddTodo, GetAllTodos ,GetTodoByID };
+const UpdateTodoByID = async (req: Request, res: Response) => {
+    let id: Types.ObjectId;
+
+    const title : string = req.body.title;
+    const content: string = req.body.content;
+
+    try {
+        id = new Types.ObjectId(req.params.id);
+    } catch (error) {
+        return ResponseCreator.generateResponse(res, 404, {}, "Todo Not Found");
+    }
+
+    const {code, todo, message} = await TodoService.UpdateTodoByID(id, title, content);
+
+    return ResponseCreator.generateResponse(res, code, todo, message);
+
+}
+
+export default { AddTodo, GetAllTodos ,GetTodoByID, UpdateTodoByID };

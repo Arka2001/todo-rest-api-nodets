@@ -12,4 +12,6 @@ TodoRouter.get("/", TodoController.GetAllTodos);
 
 TodoRouter.get("/:id", TodoController.GetTodoByID);
 
+TodoRouter.put("/:id", TodoController.UpdateTodoByID);
+
 export default TodoRouter;

@@ -40,4 +40,30 @@ const GetTodoByID = async (_id: Types.ObjectId) => {
     }
 }
 
-export { AddTodo, GetAllTodos, GetTodoByID };
+const UpdateTodoByID = async (_id: Types.ObjectId, title?: string, content?: string) => {
+    try {
+        const currentTodo = await Todo.findOne({ _id });
+
+        if (currentTodo) {
+            const result = await Todo.updateOne(
+                { _id },
+                {
+                    $set: {
+                        title: title === null ? currentTodo.title : title,
+                        content: content === null ? currentTodo.content : content,
+                    }
+                },
+                { upsert: true }
+            );
+
+            if (!result) return { code: 400, todo: {}, message: "Bad Request" };
+            return { code: 202, todo: {}, message: "Updated Successfully" };
+        } else {
+            return { code: 404, currentTodo, message: "Todo Not Found" };
+        }
+    } catch (error) {
+        return { code: 500, todo: {}, message: "Internal Server Error" };
+    }
+}
+
+export { AddTodo, GetAllTodos, GetTodoByID, UpdateTodoByID };
