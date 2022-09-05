@@ -23,10 +23,21 @@ const GetAllTodos = async (limit: number, offset: number) => {
     try {
         const todos = await Todo.find().limit(limit).skip(limit * offset);
 
-        return { status: 200, todos, message: "Success" };
+        return { code: 200, todos, message: "Success" };
     } catch (error) {
         return { code: 500, todos: [], message: "Internal Server Error" };
     }
 }
 
-export { AddTodo, GetAllTodos };
+const GetTodoByID = async (_id: Types.ObjectId) => {
+    try {
+        const todo = await Todo.findOne({ _id });
+
+        if (todo) return { code: 200, todo, message: "Success" };
+        else return { code: 404, todo, message: "Todo Not Found" };
+    } catch (error) {
+        return { code: 500, todo: {}, message: "Internal Server Error" };
+    }
+}
+
+export { AddTodo, GetAllTodos, GetTodoByID };

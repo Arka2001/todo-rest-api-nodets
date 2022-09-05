@@ -39,7 +39,7 @@ const responseType: any = {
     404: {
         httpstatus: 404,
         message: "Request resource does not exist",
-        type: "Method not allowed",
+        type: "Resource Does Not Exist",
     },
     405: {
         httpstatus: 405,

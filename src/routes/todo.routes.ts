@@ -10,4 +10,6 @@ TodoRouter.post(
 
 TodoRouter.get("/", TodoController.GetAllTodos);
 
+TodoRouter.get("/:id", TodoController.GetTodoByID);
+
 export default TodoRouter;
