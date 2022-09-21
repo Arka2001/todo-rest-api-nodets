@@ -21,7 +21,6 @@ A TODO has the following fields:
 3. **createdAt**: date type (automatically calculated in the backend)
 4. **_id**: mongo object id
 
-
 ## Endpoints
 
 1. POST `/api/todos`
@@ -43,14 +42,18 @@ Deletes a todo with the given object id. For example, a DELETE request on `api/t
 
 The first 3 steps below are to set the project up in your local environment, which is to be done just once at the beggining.
 
-#### STEP 1: 
+#### STEP 1
+
 Cloning the repository
 
-#### STEP 2:
+#### STEP 2
+
 Creating a .env file with the same fields as mentioned in the `.env.example` file
 
-#### STEP 3:
+#### STEP 3
+
 Installing node packages using the command `npm i`
 
-#### STEP 4:
+#### STEP 4
+
 Running the backend server using the command `npm start`.
