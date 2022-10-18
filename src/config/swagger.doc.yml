@@ -1,0 +1,455 @@
+openapi: 3.0.0
+info:
+    title: Todo
+    contact: {}
+    version: "1.0"
+servers:
+    - url: http://localhost:1337
+      variables: {}
+paths:
+    /api/todos:
+        get:
+            tags:
+                - Todos
+            summary: All Todos
+            description: "**Get all the todos present in the database**"
+            operationId: AllTodos
+            parameters: []
+            responses:
+                "200":
+                    description: OK
+                    headers: {}
+                "404":
+                    description: Not Found
+                    headers: {}
+            deprecated: false
+        post:
+            tags:
+                - Todos
+            summary: Add a Todo
+            description: "**Add a new todo to the database**"
+            operationId: AddTodo
+            parameters: []
+            requestBody:
+                description: ""
+                content:
+                    application/json:
+                        schema:
+                           $ref: "#/components/schemas/AddTodoPostRequest"
+                        example:
+                            title: "New Task"
+                            content: "New Content"
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    headers:
+                        Access-Control-Allow-Origin:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: "*"
+                                    example: "*"
+                        Connection:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: keep-alive
+                                    example: keep-alive
+                        Content-Length:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: "467"
+                                    example: "467"
+                        Date:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: Tue,18 Oct 2022 06:38:43 GMT
+                                    example: Tue,18 Oct 2022 06:38:43 GMT
+                        ETag:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: W/"3d-JtCoKU5GywchHVNW2burYLC1q2g"
+                                    example: W/"3d-JtCoKU5GywchHVNW2burYLC1q2g"
+                        Keep-Alive:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: timeout=5
+                                    example: timeout=5
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/AddTodoSuccessful"
+                            example:
+                                code: 201
+                                result: {}
+                                type: Created
+                                message: Success
+                "400":
+                    description: "Bad Request"
+                    headers:
+                        Access-Control-Allow-Origin:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: "*"
+                                    example: "*"
+                        Connection:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: keep-alive
+                                    example: keep-alive
+                        Content-Length:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: "467"
+                                    example: "467"
+                        Date:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: Tue,18 Oct 2022 06:38:43 GMT
+                                    example: Tue,18 Oct 2022 06:38:43 GMT
+                        ETag:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: W/"3d-JtCoKU5GywchHVNW2burYLC1q2g"
+                                    example: W/"3d-JtCoKU5GywchHVNW2burYLC1q2g"
+                        Keep-Alive:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: timeout=5
+                                    example: timeout=5
+    /api/todos/{id}:
+        get:
+            tags:
+              - Todos
+            summary: Get Todo By Id
+            operationId: GetTodoById
+            parameters:
+                - name: id
+                  in: path
+                  description: ""
+                  required: true
+                  style: simple
+                  schema:
+                      type: string
+            responses:
+                "200":
+                    description: ""
+                    headers: {}
+                "404":
+                    description: ""
+                    headers: {}
+            deprecated: false
+        put:
+            tags:
+                - Todos
+            summary: Update Todo By ID
+            operationId: UpdateTodoById
+            parameters:
+                - name: id
+                  in: path
+                  description: ""
+                  required: true
+                  style: simple
+                  schema:
+                      type: string
+            requestBody:
+                description: ""
+                content:
+                    application/json:
+                      schema:
+                          $ref: "#/components/schemas/UpdateTodoPutRequest"
+                      example:
+                          title: "Updated Todo Title"
+                          content: "Updated Todo Content"
+                required: false
+            responses:
+                "200":
+                    description: OK
+                    headers:
+                        Access-Control-Allow-Origin:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: "*"
+                                    example: "*"
+                        Connection:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: keep-alive
+                                    example: keep-alive
+                        Content-Length:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: "467"
+                                    example: "467"
+                        Date:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: Tue,18 Oct 2022 06:38:43 GMT
+                                    example: Tue,18 Oct 2022 06:38:43 GMT
+                        ETag:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: W/"3d-JtCoKU5GywchHVNW2burYLC1q2g"
+                                    example: W/"3d-JtCoKU5GywchHVNW2burYLC1q2g"
+                        Keep-Alive:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: timeout=5
+                                    example: timeout=5
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/UpdateTodoSuccessful"
+                            example:
+                                code: 201
+                                result: {}
+                                type: Created
+                                message: Success
+                "400":
+                    description: Bad Request
+                    headers:
+                        Access-Control-Allow-Origin:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: "*"
+                                    example: "*"
+                        Connection:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: keep-alive
+                                    example: keep-alive
+                        Content-Length:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: "467"
+                                    example: "467"
+                        Date:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: Tue,18 Oct 2022 06:38:43 GMT
+                                    example: Tue,18 Oct 2022 06:38:43 GMT
+                        ETag:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: W/"3d-JtCoKU5GywchHVNW2burYLC1q2g"
+                                    example: W/"3d-JtCoKU5GywchHVNW2burYLC1q2g"
+                        Keep-Alive:
+                            content:
+                                text/plain:
+                                    schema:
+                                        type: string
+                                        example: timeout=5
+                                    example: timeout=5
+                    content:
+                        application/json; charset=utf-8:
+                            schema:
+                                $ref: "#/components/schemas/UpdateTodoBadRequest"
+                            example:
+                                code: 400
+                                result: {}
+                                type: Bad Request
+                                message: ""
+            deprecated: false
+        delete:
+            tags:
+                - Todos
+            summary: Delete Todo By ID
+            operationId: DeleteTodoByID
+            parameters:
+                - name: id
+                  description: ""
+                  required: true
+                  style: simple
+                  schema:
+                      type: string
+            responses:
+                  "200":
+                      description: OK
+                      headers: {}
+            deprecated: false
+
+
+components:
+    schemas:
+        AddTodoPostRequest:
+            title: AddTodoPostRequest
+            required:
+                - title
+                - content
+            type: object
+            properties:
+                title:
+                    type: string
+                content:
+                    type: string
+            example:
+                title: "This is a new title"
+                content: "This is a content"
+        AddTodoSuccessful:
+            title: AddTodoSuccessful
+            required:
+                - code
+                - result
+                - type
+                - message
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                result:
+                    type: object
+                type:
+                    type: string
+                message:
+                    type: string
+            example:
+                code: 201
+                result: {}
+                type: Created
+                message: Success
+        UpdateTodoPutRequest:
+            title: UpdateTodoPutRequest
+            type: object
+            properties:
+                title:
+                    type: string
+                content:
+                    type: string
+            example:
+                title: "Updated Title"
+                content: "Updated Content"
+        UpdateTodoSuccessful:
+            title: UpdateTodoSuccessful
+            required:
+                - code
+                - result
+                - type
+                - message
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                result:
+                    type: object
+                type:
+                    type: string
+                message:
+                    type: string
+            example:
+                code: 200
+                result: {}
+                type: OK
+                message: Successfully Loaded Data
+        UpdateTodoBadRequest:
+            title: UpdateTodoBadRequest
+            required:
+                - code
+                - result
+                - type
+                - message
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                result:
+                    type: object
+                type:
+                    type: string
+                message:
+                    type: string
+            example:
+                code: 400
+                result: {}
+                type: Bad Request
+                message: ""
+        DeleteTodoSuccessful:
+            title: DeleteTodoSuccessful
+            required:
+                - code
+                - result
+                - type
+                - message
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                result:
+                    type: object
+                type:
+                    type: string
+                message:
+                    type: string
+            example:
+                code: 200
+                result: {}
+                type: OK
+                message: "Successfully Loaded Data"
+        DeleteTodoBadRequest:
+            title: DeleteTodoBadRequest
+            required:
+                - code
+                - result
+                - type
+                - message
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                result:
+                    type: object
+                type:
+                    type: string
+                message:
+                    type: string
+            example:
+                code: 400
+                result: {}
+                type: Bad Request
+                message: ""
+
+

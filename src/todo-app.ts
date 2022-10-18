@@ -3,12 +3,17 @@ dotenv.config();
 
 import express, { Application } from "express";
 import cors from "cors";
-import { connect } from "../config/db.config";
+import { connect } from "./config/db.config";
 import TodoRouter from "./routes/todo.routes";
+import swaggerUi from "swagger-ui-express";
 
 //Environment Variables
 const app: Application = express();
 const PORT: number = Number(process.env.PORT || 3000);
+
+//Swagger Docs
+const swaggerSpec = require("./config/swagger.config");
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Config for express app
 app.use(cors());
