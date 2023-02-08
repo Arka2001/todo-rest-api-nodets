@@ -1,10 +1,14 @@
 {
   "name": "todo-rest-api",
   "version": "1.0.0",
-  "main": "src/todo-app.ts",
+  "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/todo-app.ts"
+    "postinstall": "tsc -p .",
+    "start": "node ./build/todo-app.js",
+    "dev": "ts-node src/todo-app.ts",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
+  "engines": {"node": "18.12.1"},
   "author": "Sayantan Dasgupta",
   "license": "MIT",
   "dependencies": {
