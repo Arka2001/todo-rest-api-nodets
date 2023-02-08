@@ -1,1 +1,1 @@
-web: node ./build/todo-app.js
+web: ts-node ./src/todo-app.ts
