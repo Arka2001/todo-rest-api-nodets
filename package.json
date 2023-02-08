@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "postinstall": "tsc -p .",
-    "start": "node ./build/todo-app.js",
-    "dev": "ts-node src/todo-app.ts",
-    "deploy": "git add . && git commit -m Heroku && git push heroku master"
+    "start": "node build/todo-app.js",
+    "build": "tsc -p .",
+    "postinstall": "npm run build"
   },
   "engines": {"node": "18.12.1"},
   "author": "Sayantan Dasgupta",

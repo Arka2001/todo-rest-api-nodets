@@ -1,1 +1,1 @@
-web: ts-node ./src/todo-app.ts
+web: npm start
