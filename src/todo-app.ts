@@ -22,11 +22,33 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/todos", TodoRouter);
 
 
-app.get('/', async (req, res) => res.send(`ToDo API running successfully since ${new Date()}`));
+app.get('/', async (req, res) => res.send(`ToDo REST API running successfully since ${new Date()}`));
 
 
 // Start express server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server started listening at ${PORT}`);
     connect;
 })
+
+type ModuleId = string | number;
+
+interface WebpackHotModule {
+    hot?: {
+        data: any;
+        accept(
+            dependencies: string[],
+            callback?: (updatedDependencies: ModuleId[]) => void,
+        ): void;
+        accept(dependency: string, callback?: () => void): void;
+        accept(errHandler?: (err: Error) => void): void;
+        dispose(callback: (data: any) => void): void;
+    };
+}
+
+declare const module: WebpackHotModule;
+
+if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => server.close());
+}
