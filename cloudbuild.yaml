@@ -1,0 +1,7 @@
+steps:
+  - name: "node:16"
+    args: ["npm", "install"]
+  - name: "gcr.io/cloud-builders/gcloud"
+    args: ['app', 'deploy', 'app.yaml']
+  options:
+    logging: CLOUD_LOGGING_ONLY
