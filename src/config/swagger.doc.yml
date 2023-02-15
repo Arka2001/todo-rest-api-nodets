@@ -6,6 +6,8 @@ info:
 servers:
     - url: http://localhost:1337
       variables: {}
+    - url: https://wise-sandbox-377816.el.r.appspot.com
+      variables: {}
 paths:
     /api/todos:
         get:

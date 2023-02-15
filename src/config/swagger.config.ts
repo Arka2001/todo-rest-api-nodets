@@ -12,6 +12,10 @@ const swaggerDefinition = {
         {
             url: `http://localhost:3000`,
             description: 'Development',
+        },
+        {
+            url: 'https://wise-sandbox-377816.el.r.appspot.com',
+            description: 'Production'
         }
     ],
     // components: {
