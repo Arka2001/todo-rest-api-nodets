@@ -4,7 +4,7 @@ info:
     contact: {}
     version: "1.0"
 servers:
-    - url: http://localhost:1337
+    - url: http://localhost:3000
       variables: {}
     - url: https://wise-sandbox-377816.el.r.appspot.com
       variables: {}
