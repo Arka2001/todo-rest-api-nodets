@@ -1,5 +1,5 @@
 steps:
-  - name: "node:16"
+  - name: "node:16.19.0"
     args: ["npm", "install"]
   - name: "gcr.io/cloud-builders/gcloud"
     args: ['app', 'deploy', 'app.yaml']
