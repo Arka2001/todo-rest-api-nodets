@@ -14,7 +14,7 @@ const swaggerDefinition = {
             description: 'Development',
         },
         {
-            url: 'https://wise-sandbox-377816.el.r.appspot.com',
+            url: `https://wise-sandbox-377816.el.r.appspot.com`,
             description: 'Production'
         }
     ],
