@@ -21,7 +21,7 @@ const AddTodo = async (todo: TodoDto) => {
 
 const GetAllTodos = async (limit: number, offset: number) => {
     try {
-        const todos = await Todo.find().limit(limit).skip(limit * offset);
+        const todos = await Todo.find().limit(limit).skip(limit * (offset - 1));
 
         return { code: 200, todos, message: "Success" };
     } catch (error) {
