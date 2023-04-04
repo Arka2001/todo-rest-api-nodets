@@ -1,33 +1,10 @@
-import { TodoDto } from "../interfaces/todo.interface";
+import { TodoDto, TodoInterface } from "../dtos/todo.dtos";
 import Todo from "../models/todo.model";
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 
-const AddTodo = async (todo: TodoDto) => {
-    try {
-        // Creating a new Todo
-        const newTodo = new Todo({
-            title: todo.title,
-            content: todo.content,
-        });
+const _createTodo = async (todo: TodoDto): Promise<TodoInterface> => Todo.create({ ...todo });
 
-        await newTodo.save();
-
-        return { code: 201, message: "Success" };
-
-    } catch (error) {
-        return { code: 500, message: "Internal Server Error" };
-    }
-};
-
-const GetAllTodos = async (limit: number, offset: number) => {
-    try {
-        const todos = await Todo.find().limit(limit).skip(limit * (offset - 1));
-
-        return { code: 200, todos, message: "Success" };
-    } catch (error) {
-        return { code: 500, todos: [], message: "Internal Server Error" };
-    }
-}
+const GetAllTodos = async (createdBy: string, limit: number, offset: number): Promise<TodoInterface[] | null> => await Todo.find({ createdBy: new mongoose.Types.ObjectId(createdBy) }).limit(limit).skip(limit * (offset - 1));
 
 const GetTodoByID = async (_id: Types.ObjectId) => {
     try {
@@ -82,4 +59,4 @@ const DeleteTodo = async (_id: Types.ObjectId) => {
     }
 }
 
-export { AddTodo, GetAllTodos, GetTodoByID, UpdateTodoByID, DeleteTodo };
+export { _createTodo, GetAllTodos, GetTodoByID, UpdateTodoByID, DeleteTodo };

@@ -1,36 +1,43 @@
-import { TodoDto } from "../interfaces/todo.interface";
+import { TodoDto } from "../dtos/todo.dtos";
 import { Types } from "mongoose";
 import { Request, Response } from "express";
 import * as TodoService from "../services/todo.service";
-import ResponseCreator from "../utils/responseCreator";
+import { GenerateResponse } from "../utils/responseCreator";
 
-const AddTodo = async (req: Request, res: Response) => {
-    const todo: TodoDto = {
-        title: req.body.title,
-        content: req.body.content,
-    };
+const CreateTodo = async (req: Request, res: Response) => {
+    try {
+        const todoData: TodoDto = {
+            title: req.body.title,
+            content: req.body.content,
+            createdBy: req.body.user._id,
+        }
 
-    if (!todo.title || !todo.content) {
-        return ResponseCreator.generateResponse(
-            res,
-            400,
-            {},
-            "Title or Content is missing",
-        );
+        await TodoService._createTodo(todoData);
+
+        return GenerateResponse(res, 201);
+
+    } catch (error: any) {
+        if (process.env.NODE_ENV === 'development') console.log(error);
+        if (error.name === "ValidationError" || error.name === "CastError" || error.name === "BSONTypeError") return GenerateResponse(res, 400, {}, "One or more inputs are invalid");
+        return GenerateResponse(res, 500);
     }
-
-    const { code, message } = await TodoService.AddTodo(todo);
-
-    return ResponseCreator.generateResponse(res, code, {}, message);
 }
 
 const GetAllTodos = async (req: Request, res: Response) => {
-    const limit: number = Number(req.query['limit'] || 10);
-    const offset: number = Number(req.query['offset'] || 0);
+    try {
+        const limit = Number(req.query['limit'] || 10);
+        const page = Number(req.query['page'] || 1);
+        const userId = req.body.user.id;
 
-    const { code, todos, message } = await TodoService.GetAllTodos(limit, offset);
+        const todos = await TodoService.GetAllTodos(userId, limit, page);
 
-    return ResponseCreator.generateResponse(res, code, todos, message);
+        return GenerateResponse(res, 200, todos);
+
+    } catch (error: any) {
+        if (process.env.NODE_ENV === 'development') console.log(error);
+        if (error.name === "ValidationError" || error.name === "CastError" || error.name === "BSONTypeError") return GenerateResponse(res, 400, {}, "One or more inputs are invalid");
+        return GenerateResponse(res, 500);
+    }
 }
 
 const GetTodoByID = async (req: Request, res: Response) => {
@@ -39,12 +46,12 @@ const GetTodoByID = async (req: Request, res: Response) => {
     try {
         id = new Types.ObjectId(req.params.id);
     } catch (error) {
-        return ResponseCreator.generateResponse(res, 404, {}, "Todo Not Found");
+        return GenerateResponse(res, 404, {}, "Todo Not Found");
     }
 
     const { code, todo, message } = await TodoService.GetTodoByID(id);
 
-    return ResponseCreator.generateResponse(res, code, todo, message);
+    return GenerateResponse(res, code, todo, message);
 }
 
 const UpdateTodoByID = async (req: Request, res: Response) => {
@@ -56,12 +63,12 @@ const UpdateTodoByID = async (req: Request, res: Response) => {
     try {
         id = new Types.ObjectId(req.params.id);
     } catch (error) {
-        return ResponseCreator.generateResponse(res, 404, {}, "Todo Not Found");
+        return GenerateResponse(res, 404, {}, "Todo Not Found");
     }
 
     const { code, message } = await TodoService.UpdateTodoByID(id, title, content);
 
-    return ResponseCreator.generateResponse(res, code, message);
+    return GenerateResponse(res, code, message);
 
 }
 
@@ -71,12 +78,12 @@ const DeleteTodo = async (req: Request, res: Response) => {
     try {
         id = new Types.ObjectId(req.params.id);
     } catch (error) {
-        return ResponseCreator.generateResponse(res, 404, {}, "Todo Not Found");
+        return GenerateResponse(res, 404, {}, "Todo Not Found");
     }
 
     const { code, message } = await TodoService.DeleteTodo(id);
 
-    return ResponseCreator.generateResponse(res, code, message);
+    return GenerateResponse(res, code, message);
 }
 
-export default { AddTodo, GetAllTodos, GetTodoByID, UpdateTodoByID, DeleteTodo };
+export default { CreateTodo, GetAllTodos, GetTodoByID, UpdateTodoByID, DeleteTodo };

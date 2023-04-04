@@ -63,24 +63,29 @@ const responseType: any = {
     }
 }
 
-class ResponseCreator {
-    static generateResponse(
-        res: Response,
-        code: number = 200,
-        result: any = {},
-        message: string = "",
-    ) {
-        let newMessage = message;
-        if(message === "") {
-            newMessage = responseType[code].message;
-        }
-        return res.status(responseType[code].httpstatus).json({
-            code,
-            result,
-            type: responseType[code].type,
-            message: newMessage.toString(),
-        });
+const GenerateResponse = (
+    res: Response,
+    code: number = 200,
+    result: any = {},
+    message: string = ""
+): Response => {
+    let newMessage = message;
+    if (message === "") {
+        newMessage = responseType[code].message;
     }
+
+    return res.status(responseType[code].httpstatus).json({
+        code,
+        result,
+        type: responseType[code].type,
+        message: newMessage.toString(),
+    });
+};
+
+interface ResponseInterface<Type = any> {
+    code: number;
+    result: Type | null;
+    message: string;
 }
 
-export default ResponseCreator;
+export { GenerateResponse, ResponseInterface };

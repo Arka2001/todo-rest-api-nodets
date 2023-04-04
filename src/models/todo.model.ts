@@ -1,8 +1,13 @@
 import { Model, model, Schema } from "mongoose";
-import { TodoInterface } from "../interfaces/todo.interface";
+import { TodoInterface } from "../dtos/todo.dtos";
 
 const TodoSchema: Schema<TodoInterface> = new Schema(
     {
+        createdBy: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
         title: {
             type: String,
             required: true,
@@ -11,6 +16,8 @@ const TodoSchema: Schema<TodoInterface> = new Schema(
             type: String,
             required: true,
         }
+    }, {
+        timestamps: true,
     }
 );
 

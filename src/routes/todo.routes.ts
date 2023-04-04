@@ -5,7 +5,7 @@ const TodoRouter: Router = Router();
 
 TodoRouter.post(
     "/",
-    TodoController.AddTodo,
+    TodoController.CreateTodo,
 );
 
 TodoRouter.get("/", TodoController.GetAllTodos);
